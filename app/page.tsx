@@ -1,33 +1,30 @@
-import Image from "next/image";
-import { createClient } from "contentful";
+import client from "./client";
 import Card from "./components/Card";
 
 export default async function Home() {
-  const client = createClient({
-    space: process.env.SPACE as string,
-    environment: "master",
-    accessToken: process.env.ACCESS_TOKEN as string,
-  });
-
   const fetchProducts = async () => {
-    const res = await client.getEntry("1yxF12uNei57Sa5UUJO2sZ");
+    const res = await client.getEntries();
 
-    return res.fields;
+    return res.items;
   };
 
   const products = await fetchProducts();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ul>
-        <li>
-          <Card
-            name={products.name as string}
-            description={products.description as string}
-            price={products.price as number}
-          />
-        </li>
-      </ul>
-    </main>
+    <ul className="flex flex-wrap items-center justify-center">
+      {products.map((product) => {
+        return (
+          <li key={(product.fields.id + "li") as string}>
+            <Card
+              key={product.fields.id as string}
+              name={product.fields.name as string}
+              description={product.fields.description as string}
+              price={product.fields.price as number}
+              id={product.sys.id}
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
