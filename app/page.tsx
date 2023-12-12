@@ -1,13 +1,13 @@
 import client from "./client";
 import Card from "./components/Card";
 
-const fetchProducts = async () => {
-  const res = await client.getEntries();
-
-  return res.items;
-};
-
 export default async function Home() {
+  const fetchProducts = async () => {
+    const res = await client.getEntries();
+
+    return res.items;
+  };
+
   const products = await fetchProducts();
 
   return (
@@ -28,3 +28,5 @@ export default async function Home() {
     </ul>
   );
 }
+
+export const dynamic = "force-dynamic";
