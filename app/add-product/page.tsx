@@ -7,7 +7,6 @@ async function createProduct(formData: FormData) {
   try {
     const id = crypto.randomUUID();
     const url = `https://api.contentful.com/spaces/${process.env.SPACE}/environments/master/entries/${id}?access_token=${process.env.ACCESS_TOKEN}`;
-    console.log("ACCESS", url);
 
     const response = await axios.put(
       url,
@@ -20,7 +19,6 @@ async function createProduct(formData: FormData) {
       {
         headers: {
           "Content-Type": "application/vnd.contentful.management.v1+json",
-          "X-Contentful-Content-Type": id,
         },
       }
     );
