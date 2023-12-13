@@ -1,9 +1,4 @@
-import { createClient } from "contentful";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-const client = createClient({
-  space: process.env.SPACE as string,
-  environment: "master",
-  accessToken: process.env.ACCESS_TOKEN as string,
-});
-
-export default client;
+export default prisma;
