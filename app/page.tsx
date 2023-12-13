@@ -1,26 +1,28 @@
-import client from "./client";
+
 import Card from "./components/Card";
+import axios from "axios";
+
+const fetchProducts = async () => {
+  const res = await axios(`${process.env.BASE_URL}/products`);
+
+  return res.data;
+};
 
 export default async function Home() {
-  const fetchProducts = async () => {
-    const res = await client.getEntries();
-
-    return res.items;
-  };
-
   const products = await fetchProducts();
-
   return (
     <ul className="flex flex-wrap items-center justify-center">
       {products.map((product) => {
         return (
-          <li key={(product.fields.id + "li") as string}>
+          <li key={(product.id + "li") as string}>
             <Card
-              key={product.fields.id as string}
-              name={product.fields.name as string}
-              description={product.fields.description as string}
-              price={product.fields.price as number}
-              id={product.sys.id}
+              key={product.id as string}
+              name={product.name as string}
+              description={product.description as string}
+              price={product.price as number}
+              url={product.image}
+              quantity={product.quantity}
+              id={product.id}
             />
           </li>
         );
